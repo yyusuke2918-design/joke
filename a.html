@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Alert</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f2f2f2;
+        color: #222;
+    }
+
+    .header {
+        background: #c40000;
+        color: white;
+        padding: 18px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .warning {
+        max-width: 700px;
+        margin: 50px auto;
+        background: white;
+        padding: 35px;
+        border-radius: 8px;
+        box-shadow: 0 5px 25px rgba(0,0,0,.2);
+        text-align: center;
+    }
+
+    .icon {
+        font-size: 70px;
+    }
+
+    h1 {
+        color: #c40000;
+        font-size: 30px;
+    }
+
+    .box {
+        background: #f7f7f7;
+        border: 1px solid #ddd;
+        padding: 15px;
+        text-align: left;
+        margin: 25px 0;
+    }
+
+    .danger {
+        color: #c40000;
+        font-weight: bold;
+    }
+
+    button {
+        width: 100%;
+        max-width: 400px;
+        padding: 18px;
+        border: none;
+        border-radius: 5px;
+        background: #d00000;
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #a00000;
+    }
+
+    #result {
+        display: none;
+        margin-top: 30px;
+    }
+
+    .progress {
+        width: 100%;
+        height: 25px;
+        background: #ddd;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .bar {
+        width: 0%;
+        height: 100%;
+        background: #d00000;
+        transition: width .2s;
+    }
+
+    .joke {
+        display: none;
+        margin-top: 30px;
+        padding: 25px;
+        background: #e8ffe8;
+        border: 2px solid #28a745;
+        border-radius: 8px;
+    }
+
+    .joke h2 {
+        color: #16852b;
+    }
+
+    .footer {
+        text-align: center;
+        color: #777;
+        font-size: 13px;
+        margin: 30px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    ⚠ SECURITY ALERT
+</div>
+
+<div class="warning">
+
+    <div class="icon">⚠️</div>
+
+    <h1>重大なセキュリティ警告</h1>
+
+    <p>
+        お使いのブラウザで異常な動作が検出されました。
+    </p>
+
+    <div class="box">
+        <p>
+            <strong>検出された問題：</strong>
+        </p>
+
+        <p class="danger">
+            不正なアクセスの可能性があります。
+        </p>
+
+        <p>
+            セキュリティ診断を実行して、
+            システムの状態を確認してください。
+        </p>
+    </div>
+
+    <button onclick="startScan()">
+        今すぐセキュリティ診断を実行
+    </button>
+
+    <div id="result">
+
+        <p id="status">
+            システムを確認しています...
+        </p>
+
+        <div class="progress">
+            <div class="bar" id="bar"></div>
+        </div>
+
+    </div>
+
+    <div class="joke" id="joke">
+
+        <h2>😂 引っかかった？</h2>
+
+        <p>
+            <strong>これはジョーク画面です。</strong>
+        </p>
+
+        <p>
+            実際には何も検出していません。
+        </p>
+
+        <p>
+            個人情報・パスワード・クレジットカード情報などは
+            一切取得していません。
+        </p>
+
+        <p>
+            このページはブラウザ上だけで動作しています。
+        </p>
+
+    </div>
+
+</div>
+
+<div class="footer">
+    DEMO / JOKE PAGE — No data is collected.
+</div>
+
+
+<script>
+
+function startScan() {
+
+    const result = document.getElementById("result");
+    const bar = document.getElementById("bar");
+    const status = document.getElementById("status");
+    const joke = document.getElementById("joke");
+
+    result.style.display = "block";
+
+    let progress = 0;
+
+    const messages = [
+        "ブラウザを確認しています...",
+        "メモリを確認しています...",
+        "システムを確認しています...",
+        "不審なプロセスを検索しています...",
+        "セキュリティ状態を確認しています...",
+        "最終確認中..."
+    ];
+
+    let messageIndex = 0;
+
+    const timer = setInterval(() => {
+
+        progress += Math.floor(Math.random() * 8) + 3;
+
+        if (progress > 100) {
+            progress = 100;
+        }
+
+        bar.style.width = progress + "%";
+
+        if (progress > messageIndex * 16) {
+            if (messageIndex < messages.length) {
+                status.textContent =
+                    messages[messageIndex];
+
+                messageIndex++;
+            }
+        }
+
+        if (progress >= 100) {
+
+            clearInterval(timer);
+
+            setTimeout(() => {
+
+                status.textContent =
+                    "診断が完了しました。";
+
+                setTimeout(() => {
+                    joke.style.display = "block";
+                }, 800);
+
+            }, 700);
+        }
+
+    }, 250);
+}
+
+</script>
+
+</body>
+</html>
